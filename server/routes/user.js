@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 
 router.post('/', async (req, res) => {
     try {
+        //Check Validation
         const { error } = validate(req.body);
         if (error) {
             return res.status(400).send({
@@ -28,6 +29,7 @@ router.post('/', async (req, res) => {
             ...req.body,
             password: hashPassword
         }).save();
+
         res.status(201).send({
             message: "User Create Successfully"
         });
