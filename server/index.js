@@ -15,6 +15,7 @@ const authRoutes = require('./routes/auth');
 const allUserRoutes = require('./routes/allUser');
 const userByIdRoutes = require('./routes/userById');
 const updateUserRoute = require('./routes/updateUser');
+const deleteUserRoute = require('./routes/deleteUser');
 
 //database Connection
 connection();
@@ -29,6 +30,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/allusers', allUserRoutes);
 app.use('/api/', userByIdRoutes);
 app.use('/api/', updateUserRoute);
+app.use('/api/', deleteUserRoute);
 
 app.get('/', (req, res) => res.send('An API...'));
 
