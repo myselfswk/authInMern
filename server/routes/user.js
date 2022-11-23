@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User, validate } = require('../models/user');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 router.post('/', async (req, res) => {
@@ -16,6 +17,7 @@ router.post('/', async (req, res) => {
         const user = await User.findOne({
             email: req.body.email
         });
+
         if (user) {
             return res.status(409).send({
                 message: "User Already Exist"
@@ -24,14 +26,27 @@ router.post('/', async (req, res) => {
 
         const salt = await bcrypt.genSalt(Number(process.env.SALT));
         const hashPassword = await bcrypt.hash(req.body.password, salt);
+        const token = jwt.sign({
+            _id: this._id
+        }, process.env.JWTPRIVATEKEY, {
+            expiresIn: '7d'
+        });
 
         await new User({
             ...req.body,
             password: hashPassword
-        }).save();
-
-        res.status(201).send({
-            message: "User Create Successfully"
+        }).save(err => {
+            if (!err) {
+                res.status(201).send({
+                    name: req.body.firstName + " " + req.body.lastName,
+                    email: req.body.email,
+                    token: token,
+                    status: "Success",
+                    message: "User Create Successfully"
+                });
+            } else {
+                res.send('Something Went Wrong');
+            }
         });
 
     } catch (error) {
