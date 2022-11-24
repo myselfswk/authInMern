@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { Product } = require('../models/product');
 
-router.patch('/updateproduct/:id', (req, res) => {
+router.patch('/updateproduct/:id', async (req, res) => {
     try {
         const updatedData = {
             name: req.body.name,
@@ -11,7 +11,7 @@ router.patch('/updateproduct/:id', (req, res) => {
         }
         const options = { new: true };
 
-        const result = Product.findByIdAndUpdate(req.params.id, updatedData, options);
+        const result = await Product.findByIdAndUpdate(req.params.id, updatedData, options);
         res.send(result);
     } catch (error) {
         res.status(400).json({ message: error.message })

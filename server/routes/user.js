@@ -38,10 +38,10 @@ router.post('/', async (req, res) => {
         }).save(err => {
             if (!err) {
                 res.status(201).send({
+                    status: res.statusCode,
                     name: req.body.firstName + " " + req.body.lastName,
                     email: req.body.email,
                     token: token,
-                    status: "Success",
                     message: "User Create Successfully"
                 });
             } else {

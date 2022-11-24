@@ -14,6 +14,7 @@ router.post('/addproduct', (req, res) => {
         productModel.save();
 
         res.status(201).send({
+            status: res.statusCode,
             message: "Product Add Successfully"
         });
 

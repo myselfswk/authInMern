@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { User } = require('../models/user');
 const Joi = require('joi');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 router.post('/', async (req, res) => {
     try {
@@ -32,9 +33,9 @@ router.post('/', async (req, res) => {
         }
 
         const token = user.generateAuthToken();
-        console.log(token);
 
         res.status(200).send({
+            status: res.statusCode,
             name: user.firstName + " " + user.lastName,
             email: user.email,
             token: token,
