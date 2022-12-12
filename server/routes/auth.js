@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 router.post('/', async (req, res) => {
+    //when we passed funtion in a parameter, its callback funtion
     try {
         const { error } = validate(req.body);
         if (error) {
@@ -32,6 +33,7 @@ router.post('/', async (req, res) => {
             });
         }
 
+        //token for login user
         const token = user.generateAuthToken();
 
         res.status(200).send({

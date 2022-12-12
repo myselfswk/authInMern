@@ -26,6 +26,8 @@ router.post('/', async (req, res) => {
 
         const salt = await bcrypt.genSalt(Number(process.env.SALT));
         const hashPassword = await bcrypt.hash(req.body.password, salt);
+
+        //generate token for specific user
         const token = jwt.sign({
             _id: this._id
         }, process.env.JWTPRIVATEKEY, {

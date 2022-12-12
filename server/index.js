@@ -50,4 +50,4 @@ app.get('/', (req, res) => res.send('An API...'));
 
 //Port
 const port = process.env.PORT || 8080;
-app.listen(port, () => console.log(`Port is Running at ${port}....`));
+app.listen(port, () => console.log(`App is Running at ${port}....`));
