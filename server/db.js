@@ -7,8 +7,8 @@ module.exports = () => {
     };
 
     try {
-        // mongodb+srv://waleedkhan:waleedkhan99@cluster0.1m4k88t.mongodb.net/test
-        mongoose.connect("mongodb+srv://waleedkhan:waleedkhan99@cluster0.1m4k88t.mongodb.net/authInMern-app", connectionParams);
+        // mongodb+srv://' + process.env.NAME + ':' + process.env.PASSWORD + '@cluster0.1m4k88t.mongodb.net/test
+        mongoose.connect(process.env.DB, connectionParams);
         console.log('Connected to Database Successfully');
     } catch (error) {
         console.log(error);

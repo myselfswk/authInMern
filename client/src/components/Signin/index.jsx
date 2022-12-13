@@ -59,7 +59,9 @@ const SignIn = () => {
                             required
                             className={style.input}
                         />
-
+                        <Link style={{ alignSelf: "flex-start" }}>
+                            <p style={{ padding: "0 15px" }}>Forgot Password ?</p>
+                        </Link>
                         {
                             error && <div className={style.error_msg}>{error}</div>
                         }

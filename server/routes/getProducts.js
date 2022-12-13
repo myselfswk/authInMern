@@ -1,49 +1,13 @@
 const router = require('express').Router();
 const { Product } = require('../models/product');
-const jwt = require('jsonwebtoken');
 
-// Token Function
-function authenticateToken(req, res, next) {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-
-    if (token == null) return res.status(401).send("No Token");
-
-    jwt.verify(token, process.env.JWTPRIVATEKEY, (err, user) => {
-        if (err) return res.json({ message: "Invalid Token" });
-        req.user = user;
-        return next();
-    })
-}
+// Import middlewares
+const { paginatedResults } = require('../middlewares/paginatedResults');
+const { authenticateToken } = require('../middlewares/authenticateToken');
 
 //get All Product
-router.get('/getallproducts/', authenticateToken, (req, res) => {
-    //empty object '{}' indicates that there is no condition in find method
-    Product.find({}, (err, docs) => {
-        //find(error, result(we write it as documents))
-
-        // var decoded = jwt.decode(token, { complete: true });
-        // console.log("Decoded Header: ", decoded.header);
-        // console.log("Decoded Payload", decoded.payload);
-
-        // const valToken = jwt.verify(token, process.env.JWTPRIVATEKEY, (err, user) => {
-        //     return req.user = user;
-        // });
-        
-        // { _id: '637d24bd818327c91a484abd', iat: 1669220005, exp: 1669824805 }
-        // console.log(valToken);
-
-        try {
-            return res.status(200).send({
-                status: res.statusCode,
-                product_list: docs
-            });
-        } catch (error) {
-            return res.status(400).json({
-                message: 'No Token'
-            })
-        }
-    })
+router.get('/getallproducts/', authenticateToken, paginatedResults(Product), (req, res) => {
+    res.json(res.paginatedResults)
 })
 
 module.exports = router;
