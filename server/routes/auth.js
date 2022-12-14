@@ -2,7 +2,10 @@ const router = require('express').Router();
 const { User } = require('../models/user');
 const Joi = require('joi');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
+const Token = require('../models/token');
+const sendEmail = require('../utils/sendEmail');
+const crypto = require('crypto');
 
 router.post('/', async (req, res) => {
     //when we passed funtion in a parameter, its callback funtion
@@ -33,15 +36,36 @@ router.post('/', async (req, res) => {
             });
         }
 
+        // check if the user is verified or not
+        if (!user.verified) {
+            // get token
+            let token = await User.findOne({
+                userId: user._id
+            });
+            if (!token) {
+                //generate token
+                token = await new Token({
+                    userId: user._id,
+                    token: crypto.randomBytes(32).toString("hex")
+                }).save();
+
+                // Base Url
+                const url = `${process.env.BASE_URL}users/${user.id}/verify/${token.token}`;
+                //Now send email to verify
+                await sendEmail(user.email, "Email Verify", url);
+            }
+
+            res.status(400).send({
+                message: "An Email Send to Your Account, Please Verify"
+            })
+        }
+
         //token for login user
         const token = user.generateAuthToken();
 
         res.status(200).send({
-            status: res.statusCode,
-            name: user.firstName + " " + user.lastName,
-            email: user.email,
-            token: token,
-            message: "Logged In Successfully"
+            data: token,
+            message: "logged in successfully"
         });
 
     } catch (error) {
