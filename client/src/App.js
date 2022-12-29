@@ -13,6 +13,7 @@ import SignIn from './components/Signin';
 import EmailVerify from './components/EmailVerify';
 import ForgetPassword from './components/ForgotPassword';
 import PasswordReset from './components/PasswordReset';
+import QRCodeGenerator from './components/QRCode';
 
 function App() {
   const user = localStorage.getItem('token');
@@ -28,6 +29,8 @@ function App() {
       <Route path='/users/:id/verify/:token' element={<EmailVerify />} />
       <Route path='/forget-password' element={<ForgetPassword />} />
       <Route path='/password-reset/:id/:token' element={<PasswordReset />} />
+
+      <Route path='/qrcode' element={<QRCodeGenerator />} />
     </Routes>
   );
 }
