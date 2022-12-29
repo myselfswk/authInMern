@@ -104,3 +104,11 @@
     color: #3bb19b;
     border: 1px solid #3bb19b;
 }
+
+.p_fp {
+    padding: 0 15px;
+}
+
+.l_fp {
+    align-self: flex-start;
+}

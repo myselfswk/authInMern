@@ -25,7 +25,7 @@ const SignIn = () => {
             const { data: res } = await axios.post(url, data);
             localStorage.setItem("token", res.data);
             window.location.href = '/';
-            console.log(res.message);
+
         } catch (error) {
             if (error.response &&
                 error.response.status >= 400 &&
@@ -59,12 +59,14 @@ const SignIn = () => {
                             required
                             className={style.input}
                         />
-                        <Link style={{ alignSelf: "flex-start" }}>
-                            <p style={{ padding: "0 15px" }}>Forgot Password ?</p>
+                        <Link
+                            to={'/forget-password'}
+                            className={style.l_fp}
+                        >
+                            <p className={style.p_fp}>Forgot Password ?</p>
                         </Link>
-                        {
-                            error && <div className={style.error_msg}>{error}</div>
-                        }
+
+                        {error && <div className={style.error_msg}>{error}</div>}
                         <button type="submit" className={style.green_btn}>Sign In</button>
                     </form>
                 </div>

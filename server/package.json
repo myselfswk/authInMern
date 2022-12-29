@@ -1,14 +1,14 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "MERN Stack Web Application",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Muhammad Waleed Khan",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",

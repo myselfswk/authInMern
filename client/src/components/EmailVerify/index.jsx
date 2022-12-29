@@ -1,13 +1,16 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+
 import Success from "../../images/success.png";
 
 import styles from './style.module.css';
 
 const EmailVerify = () => {
-    const [validUrl, setValidUrl] = useState(false);
+    const [validUrl, setValidUrl] = useState(true);
     const params = useParams();
+    // console.log(params.id);
+    // console.log(params.token);
 
     useEffect(() => {
         const verifyEmailUrl = async () => {
@@ -17,15 +20,14 @@ const EmailVerify = () => {
                 console.log(data);
                 setValidUrl(true);
             } catch (error) {
-                console.log(error);
+                console.log(error, "From Email Verify");
                 setValidUrl(false);
             }
         }
 
         //Call Function
         verifyEmailUrl();
-    }, [params])
-
+    }, [params]);
 
     return (
         <Fragment>

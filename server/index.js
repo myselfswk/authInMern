@@ -24,6 +24,9 @@ const getProductById = require('./routes/getProductById');
 const deleteProductById = require('./routes/deleteProduct');
 const updateProductById = require('./routes/updateProduct');
 
+// import Password Reset Route
+const passwordResetRoute = require('./routes/PasswordReset');
+
 //database Connection
 connection();
 
@@ -45,6 +48,9 @@ app.use('/api/', getProduct);
 app.use('/api/', getProductById);
 app.use('/api/', deleteProductById);
 app.use('/api/', updateProductById);
+
+// Password Reset Route
+app.use('/api/password-reset', passwordResetRoute);
 
 app.get('/', (req, res) => res.send('An API...'));
 

@@ -65,10 +65,10 @@ router.post('/', async (req, res) => {
         }).save();
         // console.log(token);
 
-        // // Base Url
-        // const url = `${process.env.BASE_URL}users/${user.id}/verify/${token}`;
-        // //Now send email to verify
-        // await sendEmail(user.email, "Email Verify", url);
+        // Base Url
+        const url = `${process.env.BASE_URL}users/${user.id}/verify/${token.token}`;
+        //Now send email to verify
+        await sendEmail(user.email, "Email Verify", url);
 
         res.status(201).send({
             message: "An Email Send to Your Account, Please Verify"
@@ -96,12 +96,10 @@ router.get('/:id/verify/:token/', async (req, res) => {
             token: req.params.token
         });
         if (!token) return res.status(400).send({ message: "Invalid Link, Token" });
+        // console.log("User: ".concat(user, " Token", token));
 
-        await User.updateOne({
-            _id: user._id,
-            verified: true
-        });
-        await token.remove();
+        await User.updateOne({ _id: user._id }, { verified: true });
+        // await token.remove();
 
         res.status(200).send({
             message: "Email Verified Successfully"

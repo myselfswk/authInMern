@@ -11,6 +11,8 @@ import './App.css';
 import SignUp from './components/Signup';
 import SignIn from './components/Signin';
 import EmailVerify from './components/EmailVerify';
+import ForgetPassword from './components/ForgotPassword';
+import PasswordReset from './components/PasswordReset';
 
 function App() {
   const user = localStorage.getItem('token');
@@ -24,6 +26,8 @@ function App() {
       <Route path='/login' element={<SignIn />} />
       <Route path='/' element={<Navigate replace to={'/login'} />} />
       <Route path='/users/:id/verify/:token' element={<EmailVerify />} />
+      <Route path='/forget-password' element={<ForgetPassword />} />
+      <Route path='/password-reset/:id/:token' element={<PasswordReset />} />
     </Routes>
   );
 }
